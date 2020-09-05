@@ -26,6 +26,12 @@
             input{
                 margin-bottom: 5px;
             }
+            .result{
+                display: none;
+            }
+            .lastThirtyDaysLfoCon{
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -66,7 +72,7 @@
                 </div>
             </div>
             <div class="result">
-                <p>Date: 05.09.2020</p>
+                <p>Date: <span class="date"></span>.<span class="month"></span>.<span class="year"></span></p>
                 <div class="plant-factor">
                     <h4>Plant factor of MEPL:</h4>
                     <p>Yesterday's = <span class="yesterdayPlantFactor">0</span>%</p>
@@ -108,65 +114,74 @@
             </div>
         </div>
         <script>
-            const submitBtn = document.querySelector('.submit-btn');
+            const submitBtn = querySetting('.submit-btn');
 
-            const hfoStockInput = document.querySelector('.hfo-stock-input');
-            const loStockInput = document.querySelector('.lo-stock-input');
-            const lfoStockInput = document.querySelector('.lfo-stock-input');
-            const lhv = document.querySelector('.lhv-input');
-            const heatRate = document.querySelector('.heat-rate-input');
+            const hfoStockInput = querySetting('.hfo-stock-input');
+            const loStockInput = querySetting('.lo-stock-input');
+            const lfoStockInput = querySetting('.lfo-stock-input');
+            const lhv = querySetting('.lhv-input');
+            const heatRate = querySetting('.heat-rate-input');
 
-            const hfo = document.querySelector('.hfo');
-            const lo = document.querySelector('.lo');
-            const lfo = document.querySelector('.lfo');
+            const hfo = querySetting('.hfo');
+            const lo = querySetting('.lo');
+            const lfo = querySetting('.lfo');
 
             const lfoWeeklyConsumption = document.querySelectorAll('.lfo-daily-consumption');
             const WeeklyLfoArr = [...lfoWeeklyConsumption];
 
             submitBtn.addEventListener(('click'),()=>{
+                if (lhv.value=='' || heatRate.value =='' || lfoStockInput.value == ''){
+                    alert('input value not be empty');
+                }else{                    
+                    querySetting('.result').style.display = 'block';
+                }
                 //export
                 const weeklyExport = document.querySelectorAll('.weekly-export');
                 const weeklyExportArr = [...weeklyExport];
-                document.querySelector('.yesterdayPlantFactor').textContent = twoDecimal(weeklyExportArr[0].value/3600000*100);
-                document.querySelector('.lastTwoDaysPlantFactor').textContent = twoDecimal(totalValue(weeklyExportArr[0].value, weeklyExportArr[1].value)/2/3600000*100);
-                document.querySelector('.lastThreeDaysPlantFactor').textContent = twoDecimal(totalValue(weeklyExportArr[0].value, weeklyExportArr[1].value, weeklyExportArr[2].value)/3/3600000*100);
-                document.querySelector('.lastSevenDaysPlantFactor').textContent = twoDecimal(weeklyPlantFactor(weeklyExportArr)/7/3600000*100);
+                querySetting('.yesterdayPlantFactor').textContent = twoDecimal(weeklyExportArr[0].value/3600000*100);
+                querySetting('.lastTwoDaysPlantFactor').textContent = twoDecimal(totalValue(weeklyExportArr[0].value, weeklyExportArr[1].value)/2/3600000*100);
+                querySetting('.lastThreeDaysPlantFactor').textContent = twoDecimal(totalValue(weeklyExportArr[0].value, weeklyExportArr[1].value, weeklyExportArr[2].value)/3/3600000*100);
+                querySetting('.lastSevenDaysPlantFactor').textContent = twoDecimal(weeklyPlantFactor(weeklyExportArr)/7/3600000*100);
                 //stock
                 hfo.textContent = hfoStockInput.value;
                 lo.textContent = loStockInput.value;
                 lfo.textContent = lfoStockInput.value;
 
                 //hfo status
-                document.querySelector('.two-days-plant-factor').textContent = document.querySelector('.lastTwoDaysPlantFactor').textContent;
-                document.querySelector('.three-days-plant-factor').textContent = document.querySelector('.lastThreeDaysPlantFactor').textContent;
-                document.querySelector('.seven-days-plant-factor').textContent = document.querySelector('.lastSevenDaysPlantFactor').textContent;
+                querySetting('.two-days-plant-factor').textContent = querySetting('.lastTwoDaysPlantFactor').textContent;
+                querySetting('.three-days-plant-factor').textContent = querySetting('.lastThreeDaysPlantFactor').textContent;
+                querySetting('.seven-days-plant-factor').textContent = querySetting('.lastSevenDaysPlantFactor').textContent;
                 
-                hfoCalculation('.two-days-hfo-consumption-monthly',document.querySelector('.two-days-plant-factor').textContent);
-                hfoCalculation('.three-days-hfo-consumption-monthly',document.querySelector('.three-days-plant-factor').textContent);
-                hfoCalculation('.seven-days-hfo-consumption-monthly',document.querySelector('.seven-days-plant-factor').textContent);
+                hfoCalculation('.two-days-hfo-consumption-monthly',querySetting('.two-days-plant-factor').textContent);
+                hfoCalculation('.three-days-hfo-consumption-monthly',querySetting('.three-days-plant-factor').textContent);
+                hfoCalculation('.seven-days-hfo-consumption-monthly',querySetting('.seven-days-plant-factor').textContent);
                 //lo status
-                document.querySelector('#two-days-plant-factor').textContent = document.querySelector('.lastTwoDaysPlantFactor').textContent;
-                document.querySelector('#three-days-plant-factor').textContent = document.querySelector('.lastThreeDaysPlantFactor').textContent;
-                document.querySelector('#seven-days-plant-factor').textContent = document.querySelector('.lastSevenDaysPlantFactor').textContent;
+                querySetting('#two-days-plant-factor').textContent = querySetting('.lastTwoDaysPlantFactor').textContent;
+                querySetting('#three-days-plant-factor').textContent = querySetting('.lastThreeDaysPlantFactor').textContent;
+                querySetting('#seven-days-plant-factor').textContent = querySetting('.lastSevenDaysPlantFactor').textContent;
 
-                loCalculation('.two-day-lo-consumption-monthly', document.querySelector('#two-days-plant-factor').textContent);
-                loCalculation('.three-day-lo-consumption-monthly', document.querySelector('#three-days-plant-factor').textContent);
-                loCalculation('.seven-day-lo-consumption-monthly', document.querySelector('#seven-days-plant-factor').textContent);
+                loCalculation('.two-day-lo-consumption-monthly', querySetting('#two-days-plant-factor').textContent);
+                loCalculation('.three-day-lo-consumption-monthly', querySetting('#three-days-plant-factor').textContent);
+                loCalculation('.seven-day-lo-consumption-monthly', querySetting('#seven-days-plant-factor').textContent);
                 
                 //lfo status
-                document.querySelector('.yesterdayLfoCon').textContent = WeeklyLfoArr[0].value;
-                document.querySelector('.lastTwoDaysLfoCon').textContent = twoDecimal(totalValue(WeeklyLfoArr[0].value, WeeklyLfoArr[1].value)/2);
-                document.querySelector('.lastSevenDaysLfoCon').textContent = twoDecimal(weeklyPlantFactor(WeeklyLfoArr)/7);
+                querySetting('.yesterdayLfoCon').textContent = WeeklyLfoArr[0].value;
+                querySetting('.lastTwoDaysLfoCon').textContent = twoDecimal(totalValue(WeeklyLfoArr[0].value, WeeklyLfoArr[1].value)/2);
+                querySetting('.lastSevenDaysLfoCon').textContent = twoDecimal(weeklyPlantFactor(WeeklyLfoArr)/7);
 
-                document.querySelector('#lastTwoDaysLfoCon').textContent = document.querySelector('.lastTwoDaysLfoCon').textContent;
-                document.querySelector('#lastSevenDaysLfoCon').textContent = document.querySelector('.lastSevenDaysLfoCon').textContent;
-                document.querySelector('.lfoBtn').addEventListener('click',()=>{
-                    document.querySelector('.lastThirtyDaysLfoCon').textContent = document.querySelector('.lfoInput').value +' KL';
-                    document.querySelector('.thirtyDaysLfo').textContent = document.querySelector('.lfoInput').value;
-                    document.querySelector('.thirtyDaysLfoResult').textContent = document.querySelector('.thirtyDaysLfo').textContent * 30;
+                querySetting('#lastTwoDaysLfoCon').textContent = querySetting('.lastTwoDaysLfoCon').textContent;
+                querySetting('#lastSevenDaysLfoCon').textContent = querySetting('.lastSevenDaysLfoCon').textContent;
+                querySetting('.lfoBtn').addEventListener('click',()=>{
+                    querySetting('.lastThirtyDaysLfoCon').style.display = 'block';
+                    querySetting('.lfoInput').style.display = 'none';
+                    querySetting('.lfoBtn').style.display = 'none';
+
+                    querySetting('.lastThirtyDaysLfoCon').textContent = querySetting('.lfoInput').value +' KL';
+                    querySetting('.thirtyDaysLfo').textContent = querySetting('.lfoInput').value;
+                    querySetting('.thirtyDaysLfoResult').textContent = querySetting('.thirtyDaysLfo').textContent * 30;
                 })
-                document.querySelector('.twoDaysLfoResult').textContent = document.querySelector('#lastTwoDaysLfoCon').textContent * 30;
-                document.querySelector('.sevenDaysLfoResult').textContent = document.querySelector('#lastSevenDaysLfoCon').textContent * 30;
+                querySetting('.twoDaysLfoResult').textContent = (querySetting('#lastTwoDaysLfoCon').textContent * 30).toFixed(3);
+                querySetting('.sevenDaysLfoResult').textContent = (querySetting('#lastSevenDaysLfoCon').textContent * 30).toFixed(3);
 
             })
             function twoDecimal(number){
@@ -198,12 +213,28 @@
             }
             //lo calculation
             function loCalculation(name,number){
-                return document.querySelector(name).textContent = (number*150*24*30*0.8/100000).toFixed(3);
+                return querySetting(name).textContent = (number*150*24*30*0.8/100000).toFixed(3);
             }
             //hfo calculation
             function hfoCalculation(name,number){
-                return document.querySelector(name).textContent = (number*150*24*30*heatRate.value/lhv.value/100).toFixed(3);
+                return querySetting(name).textContent = Math.round(number*150*24*30*heatRate.value/lhv.value/100);
             }
+
+            function querySetting(name){
+                return document.querySelector(name);
+            }
+
+            //date
+            let date = new Date().getDate();
+            let month = new Date().getMonth();
+            const year = new Date().getFullYear();
+            if(date<10||month<10){
+                date = '0'+date;
+                month = '0'+month;
+            }
+            querySetting('.date').innerText = date;
+            querySetting('.month').innerText = month;
+            querySetting('.year').innerText = year;
         </script>
     </body>
 </html>
