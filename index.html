@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fuel Consumption Report</title>
+        <style>
+            .container{
+                margin: 0 auto;
+                text-align: center;
+            }
+            h3{
+                margin: 0;
+            }
+            .input-container{
+                display: flex;
+            }
+            .submit-btn{
+                display: block;
+                max-height: 200px;
+            }
+            .input{
+                margin-right: 20px;
+                padding: 0 5px;
+            }
+            input{
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="input-container">
+                <div class="export input">
+                    <h3>Please put last 7 day Export</h3><br>
+                    <input class="weekly-export" type="text"><br>
+                    <input class="weekly-export" type="text"><br>
+                    <input class="weekly-export" type="text"><br>
+                    <input class="weekly-export" type="text"><br>
+                    <input class="weekly-export" type="text"><br>
+                    <input class="weekly-export" type="text"><br>
+                    <input class="weekly-export" type="text">
+                </div>
+                <div class="status input">
+                    <h3>Please put today stock value</h3><br>
+                    <input class="hfo-stock-input" type="text" placeholder="Today HFO Stock"><br>
+                    <input class="lfo-stock-input" type="text" placeholder="Today LFO Stock"><br>
+                    <input class="lo-stock-input" type="text" placeholder="Today LO Stock"><br>
+                    <h3>Please put current LHV</h3>
+                    <input class="lhv-input" type="text" placeholder="Current LHV of HFO">
+                    <h3>Please put Today Heat Rate</h3>
+                    <input class="heat-rate-input" type="text" placeholder="Heat Rate of today">
+                </div>
+                <div class="lfo-consumption-weekly input">
+                    <h3>Please put Last 7 day LFO Consumption Value</h3><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                    <input class="lfo-daily-consumption" type="text"><br>
+                </div>
+                <div>
+                    <input class="submit-btn" type="button" value="Submit">
+                </div>
+            </div>
+            <div class="result">
+                <p>Date: 05.09.2020</p>
+                <div class="plant-factor">
+                    <h4>Plant factor of MEPL:</h4>
+                    <p>Yesterday's = <span class="yesterdayPlantFactor">0</span>%</p>
+                    <p>Last 2 Days (Avg.) = <span class="lastTwoDaysPlantFactor">0</span>%</p>
+                    <p>Last 3 Days (Avg.) = <span class="lastThreeDaysPlantFactor">0</span>%</p>
+                    <p>Last 7 Days (Avg.) = <span class="lastSevenDaysPlantFactor">0</span>%</p>          
+                </div>
+                <div class="fuel-status">
+                    <h4>Fuel Status:</h4>
+                    <p>Today HFO stock: <span class="hfo">0</span> MT</p>
+                    <p>Today LO stock: <span class="lo">0</span> KL</p>
+                    <p>Today LFO stock: <span class="lfo">0</span> KL</p>
+                </div>
+                <div class="hfo-consumption">
+                    <h4>Estimated HFO consumption:</h4>
+                    <p>PF@<span class="two-days-plant-factor">0</span>%=FC@<span class="two-days-hfo-consumption-monthly">0</span> MT/Month</p>
+                    <p>PF@<span class="three-days-plant-factor">0</span>%=FC@<span class="three-days-hfo-consumption-monthly">0</span> MT/Month.</p>
+                    <p>PF@<span class="seven-days-plant-factor">0</span>%=FC@<span class="seven-days-hfo-consumption-monthly">0</span> MT/Month.</p>
+                </div>
+                <div class="lo-consumption">
+                    <h4>Estimated LO consumption:</h4>
+                    <p>PF@<span id="two-days-plant-factor" class="">0</span>%=LOC@<span class="two-day-lo-consumption-monthly">0</span> KL/Month.</p>
+                    <p>PF@<span id="three-days-plant-factor" class="">0</span>%=LOC@<span class="three-day-lo-consumption-monthly">0</span> KL/Month.</p>
+                    <p>PF@<span id="seven-days-plant-factor" class="">0</span>%=LOC@<span class="seven-day-lo-consumption-monthly">0</span> KL/Month.</p>
+                </div>
+                <div class="lfo-consumption">
+                    <h4>LFO consumption of MEPL:</h4>
+                    <p>Yesterday's = <span class="yesterdayLfoCon">0</span> KL</p>
+                    <p>Last 2 Days (Avg.) = <span class="lastTwoDaysLfoCon">0</span> KL</p>
+                    <p>Last 7 Days (Avg.) = <span class="lastSevenDaysLfoCon">0</span> KL</p>
+                    <p>Last 30 Days (Avg.) = <span class="lastThirtyDaysLfoCon">0</span> <input class="lfoInput" type="text"> <input class="lfoBtn" type="button" value="Calculate"></p>
+                </div>
+                <div class="estimated-lfo-consumption">
+                    <h4>Estimated LFO consumption:</h4>
+                    <p>LFOC@<span id="lastTwoDaysLfoCon">0</span> KL= <span class="twoDaysLfoResult">0</span> KL/Month.</p>
+                    <p>LFOC@<span id="lastSevenDaysLfoCon">0</span> KL= <span class="sevenDaysLfoResult">0</span> KL/Month.</p>
+                    <p>LFOC@<span class="thirtyDaysLfo">0</span> KL= <span class="thirtyDaysLfoResult">0</span> KL/Month.</p>
+                </div>
+            </div>
+        </div>
+        <script>
+            const submitBtn = document.querySelector('.submit-btn');
+
+            const hfoStockInput = document.querySelector('.hfo-stock-input');
+            const loStockInput = document.querySelector('.lo-stock-input');
+            const lfoStockInput = document.querySelector('.lfo-stock-input');
+            const lhv = document.querySelector('.lhv-input');
+            const heatRate = document.querySelector('.heat-rate-input');
+
+            const hfo = document.querySelector('.hfo');
+            const lo = document.querySelector('.lo');
+            const lfo = document.querySelector('.lfo');
+
+            const lfoWeeklyConsumption = document.querySelectorAll('.lfo-daily-consumption');
+            const WeeklyLfoArr = [...lfoWeeklyConsumption];
+
+            submitBtn.addEventListener(('click'),()=>{
+                //export
+                const weeklyExport = document.querySelectorAll('.weekly-export');
+                const weeklyExportArr = [...weeklyExport];
+                document.querySelector('.yesterdayPlantFactor').textContent = twoDecimal(weeklyExportArr[0].value/3600000*100);
+                document.querySelector('.lastTwoDaysPlantFactor').textContent = twoDecimal(totalValue(weeklyExportArr[0].value, weeklyExportArr[1].value)/2/3600000*100);
+                document.querySelector('.lastThreeDaysPlantFactor').textContent = twoDecimal(totalValue(weeklyExportArr[0].value, weeklyExportArr[1].value, weeklyExportArr[2].value)/3/3600000*100);
+                document.querySelector('.lastSevenDaysPlantFactor').textContent = twoDecimal(weeklyPlantFactor(weeklyExportArr)/7/3600000*100);
+                //stock
+                hfo.textContent = hfoStockInput.value;
+                lo.textContent = loStockInput.value;
+                lfo.textContent = lfoStockInput.value;
+
+                //hfo status
+                document.querySelector('.two-days-plant-factor').textContent = document.querySelector('.lastTwoDaysPlantFactor').textContent;
+                document.querySelector('.three-days-plant-factor').textContent = document.querySelector('.lastThreeDaysPlantFactor').textContent;
+                document.querySelector('.seven-days-plant-factor').textContent = document.querySelector('.lastSevenDaysPlantFactor').textContent;
+                
+                hfoCalculation('.two-days-hfo-consumption-monthly',document.querySelector('.two-days-plant-factor').textContent);
+                hfoCalculation('.three-days-hfo-consumption-monthly',document.querySelector('.three-days-plant-factor').textContent);
+                hfoCalculation('.seven-days-hfo-consumption-monthly',document.querySelector('.seven-days-plant-factor').textContent);
+                //lo status
+                document.querySelector('#two-days-plant-factor').textContent = document.querySelector('.lastTwoDaysPlantFactor').textContent;
+                document.querySelector('#three-days-plant-factor').textContent = document.querySelector('.lastThreeDaysPlantFactor').textContent;
+                document.querySelector('#seven-days-plant-factor').textContent = document.querySelector('.lastSevenDaysPlantFactor').textContent;
+
+                loCalculation('.two-day-lo-consumption-monthly', document.querySelector('#two-days-plant-factor').textContent);
+                loCalculation('.three-day-lo-consumption-monthly', document.querySelector('#three-days-plant-factor').textContent);
+                loCalculation('.seven-day-lo-consumption-monthly', document.querySelector('#seven-days-plant-factor').textContent);
+                
+                //lfo status
+                document.querySelector('.yesterdayLfoCon').textContent = WeeklyLfoArr[0].value;
+                document.querySelector('.lastTwoDaysLfoCon').textContent = twoDecimal(totalValue(WeeklyLfoArr[0].value, WeeklyLfoArr[1].value)/2);
+                document.querySelector('.lastSevenDaysLfoCon').textContent = twoDecimal(weeklyPlantFactor(WeeklyLfoArr)/7);
+
+                document.querySelector('#lastTwoDaysLfoCon').textContent = document.querySelector('.lastTwoDaysLfoCon').textContent;
+                document.querySelector('#lastSevenDaysLfoCon').textContent = document.querySelector('.lastSevenDaysLfoCon').textContent;
+                document.querySelector('.lfoBtn').addEventListener('click',()=>{
+                    document.querySelector('.lastThirtyDaysLfoCon').textContent = document.querySelector('.lfoInput').value +' KL';
+                    document.querySelector('.thirtyDaysLfo').textContent = document.querySelector('.lfoInput').value;
+                    document.querySelector('.thirtyDaysLfoResult').textContent = document.querySelector('.thirtyDaysLfo').textContent * 30;
+                })
+                document.querySelector('.twoDaysLfoResult').textContent = document.querySelector('#lastTwoDaysLfoCon').textContent * 30;
+                document.querySelector('.sevenDaysLfoResult').textContent = document.querySelector('#lastSevenDaysLfoCon').textContent * 30;
+
+            })
+            function twoDecimal(number){
+                return number.toFixed(2);
+            }
+
+            // multiple days total plant factor
+            function totalValue(...rest){
+                const totalArr = [];
+                rest.map(singleRest=> {
+                    const int = parseInt(singleRest);
+                    totalArr.push(int);
+                })
+                return sum(totalArr);
+            }
+
+            //seven days total plant factor
+            function weeklyPlantFactor(arr){
+                const fullArr = [];
+                arr.map(dailyPlantFactor=>{
+                    const int = parseInt(dailyPlantFactor.value);
+                    fullArr.push(int);
+                })
+                return sum(fullArr);
+            }
+
+            function sum(number){
+               return number.reduce((num1,num2)=> num1 + num2);
+            }
+            //lo calculation
+            function loCalculation(name,number){
+                return document.querySelector(name).textContent = (number*150*24*30*0.8/100000).toFixed(3);
+            }
+            //hfo calculation
+            function hfoCalculation(name,number){
+                return document.querySelector(name).textContent = (number*150*24*30*heatRate.value/lhv.value/100).toFixed(3);
+            }
+        </script>
+    </body>
+</html>
