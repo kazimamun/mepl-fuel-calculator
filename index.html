@@ -178,7 +178,7 @@
 
                     querySetting('.lastThirtyDaysLfoCon').textContent = querySetting('.lfoInput').value +' KL';
                     querySetting('.thirtyDaysLfo').textContent = querySetting('.lfoInput').value;
-                    querySetting('.thirtyDaysLfoResult').textContent = querySetting('.thirtyDaysLfo').textContent * 30;
+                    querySetting('.thirtyDaysLfoResult').textContent = (querySetting('.thirtyDaysLfo').textContent * 30).toFixed(3);
                 })
                 querySetting('.twoDaysLfoResult').textContent = (querySetting('#lastTwoDaysLfoCon').textContent * 30).toFixed(3);
                 querySetting('.sevenDaysLfoResult').textContent = (querySetting('#lastSevenDaysLfoCon').textContent * 30).toFixed(3);
